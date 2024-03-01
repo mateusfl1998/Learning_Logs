@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Topic
 
 def index(request):
@@ -16,3 +16,9 @@ def topicdetailsview(request, topic_id):
     entries = topic.entry_set.order_by('-date_add')
     context = {'topic':topic, 'entries':entries}
     return render (request, 'topic.html', context)
+
+class NewTopicCreateView(CreateView):
+    model = Topic
+    fields = ['text',]
+    template_name =  'create_new_topic.html'
+    success_url = 'topics'
