@@ -73,7 +73,14 @@
     <nav>
       <ul>
         <li><a href="{%url 'topics_list' %}">Tópicos</a></li>
-        <li>Olá User</li>
+        {%if user.is_authenticated%}
+        <li>Olá {{user.username}}</li>
+        <li><a href="{% url 'logout' %}">Sair</a></li>
+        {%else%}
+        <li><a href="{% url 'login'%}">Entrar</a></li>
+        <li><a href="{% url 'registry'%}">Registrar</a></li>
+        {%endif%}
+
       </ul>
     </nav>
   </header>

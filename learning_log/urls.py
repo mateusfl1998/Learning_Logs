@@ -29,5 +29,7 @@ urlpatterns = [
     path('topic/<int:pk>/add_entry',EntryCreateView.as_view(), name='entry_view_create'),
     path('entry/<int:pk>/update',UpdateEntryView.as_view(), name='entry_view_update'),
     path('entry/<int:pk>/delete',EntryDeleteView.as_view(), name='entry_view_delete'),
+    path('users/',include('users.urls')),
+    
     
 ]
