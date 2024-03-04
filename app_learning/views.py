@@ -32,7 +32,13 @@ class NewTopicCreateView(CreateView):
     model = Topic
     fields = ['text']
     template_name =  'create_new_topic.html'
-    success_url = 'topics'
+    success_url = reverse_lazy('topics_list')
+    # def get_success_url(self):
+    #     topic_id = self.object.id
+    #     if topic_id:
+    #         return reverse_lazy('topic_detail' 'topic_id')
+    #     else:
+    #         pass
 
 class UpdateTopicView(UpdateView):
     model = Topic
@@ -51,7 +57,6 @@ class EntryCreateView(CreateView):
     model = Entry
     form_class = EntryForm
     template_name = 'create_new_entry.html'
-    success_url = reverse_lazy('topics_list')  # Ou ajuste para a URL desejada
 
     def form_valid(self, form):
         topic_id = self.kwargs['pk']
@@ -66,6 +71,13 @@ class EntryCreateView(CreateView):
         context["topic"] = topic
         return context
     
+    def get_success_url(self):
+        topic_id = self.object.topic.id
+        if topic_id:
+            return reverse_lazy('topic_detail',kwargs={'pk': topic_id} ) 
+        else:
+            pass 
+
 class UpdateEntryView(UpdateView):
     model = Entry
     fields = ['text']
@@ -79,3 +91,16 @@ class UpdateEntryView(UpdateView):
         else:
             # Lógica de fallback, caso o topic_id não esteja na sessão
             pass
+
+class EntryDeleteView(DeleteView):
+    model = Entry
+    template_name = 'entry_delete.html'
+    fields = ['text']
+
+    def get_success_url(self):
+        topic_id = self.object.topic.id
+        if topic_id:
+            return reverse_lazy('topic_detail', kwargs={'pk': topic_id})
+        else:
+            pass
+        

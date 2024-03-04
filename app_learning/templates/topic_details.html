@@ -11,7 +11,7 @@
 <ul> 
     <div>
         {%for entry in entries%} 
-        <p>{{entry.text}} - adicionado em: {{entry.date_add}} - <a href="{% url 'entry_view_update' entry.pk %}">Editar</a> - Excluir</p>
+        <p>{{entry.text}} - adicionado em: {{entry.date_add}} - <a href="{% url 'entry_view_update' entry.pk %}">Editar</a> - <a href ="{% url 'entry_view_delete' entry.pk %}"> Excluir</a></p>
     
     </div>
     
