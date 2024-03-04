@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content%}
+
+<ul>Tópicos:</ul>
+{% for topic in topics %}
+  <li><a href="{% url 'topic_detail' topic.pk %}">{{ topic }}</a></li>
+
+{% endfor %}
+
+<p><a href="{%url 'topic_view_create' %}">Clique aqui para adicionar um novo tópico</a></p>  
+
+{% endblock content%}   

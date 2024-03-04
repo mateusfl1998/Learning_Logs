@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{%block content%}
+
+<h2>Título: {{ topic }}</h2>
+    <p>Para <b>EDITAR</b> o Tópico "{{topic}}" <a href="{% url 'topic_view_update' topic.pk%}">clique aqui !</a></p>
+    <p>Para </b>DELETAR<b> o Tópico "{{topic}}" <a href="{% url 'topic_view_delete' topic.pk%}">clique aqui !</a></p>
+
+<p>Entradas: </p>
+<ul> 
+    {%for i in entries%}
+    <p>{{i.text}} - adicionado em: {{i.date_add}} </p>
+
+    
+    {%endfor%}
+</ul>
+
+{%endblock%}

@@ -16,12 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from app_learning.views import index, TopicsListView, topicdetailsview, NewTopicCreateView
+from app_learning.views import index, TopicDetailsView, TopicsListView, NewTopicCreateView, UpdateTopicView, DeleteView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',index, name='home'),
-    path('topics',TopicsListView.as_view(), name='topics'),
-    path('topics/<topic_id>',topicdetailsview, name='topics_detail'),
+    path('topics',TopicsListView.as_view(), name='topics_list'),
+    path('topic/<int:pk>',TopicDetailsView.as_view(), name='topic_detail'),
     path('create_topic',NewTopicCreateView.as_view(), name='topic_view_create'),
+    path('topic/update/<int:pk>',UpdateTopicView.as_view(), name='topic_view_update'),
+    path('topic/delete/<int:pk>',DeleteView.as_view(), name='topic_view_delete'),
 ]

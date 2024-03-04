@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{%block content%}
+
+<p>Escreva um novo nome para o topico "{{topic}}"</p>
+{% csrf_token %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar Alterações</button>
+  </form>
+
+{%endblock%}

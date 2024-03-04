@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{%block content%}
+
+<p>Tem certeza que deseja deleter o {{titulo}}?<p>
+
+<form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Deletar</button>
+</form>
+{%endblock%}
