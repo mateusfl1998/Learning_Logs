@@ -2,11 +2,11 @@
 
 {%block content%}
 
-<p>Tem certeza que deseja deleter o {{titulo}}?<p>
+<div class="card-body">
+        <p>Tem certeza que deseja deletar o Tópico <strong>{{ topic }}</strong>?</p>
+        <form method="post">
+          {% csrf_token %}
+          <div class="buttons-container">
+            <button type="submit" class="btn btn-danger">Deletar Carro</button>
 
-<form method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Deletar</button>
-</form>
 {%endblock%}

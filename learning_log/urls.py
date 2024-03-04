@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from app_learning.views import index, TopicDetailsView, TopicsListView, NewTopicCreateView, UpdateTopicView, DeleteView
+from app_learning.views import index,UpdateEntryView, DeleteTopicView, TopicDetailsView, TopicsListView, NewTopicCreateView, UpdateTopicView, DeleteView, EntryCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +25,7 @@ urlpatterns = [
     path('topic/<int:pk>',TopicDetailsView.as_view(), name='topic_detail'),
     path('create_topic',NewTopicCreateView.as_view(), name='topic_view_create'),
     path('topic/update/<int:pk>',UpdateTopicView.as_view(), name='topic_view_update'),
-    path('topic/delete/<int:pk>',DeleteView.as_view(), name='topic_view_delete'),
+    path('topic/<int:pk>/delete',DeleteTopicView.as_view(), name='topic_view_delete'),
+    path('topic/<int:pk>/add_entry',EntryCreateView.as_view(), name='entry_view_create'),
+    path('entry/<int:pk>/update',UpdateEntryView.as_view(), name='entry_view_update'),
 ]

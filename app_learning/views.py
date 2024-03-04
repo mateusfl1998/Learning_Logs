@@ -3,7 +3,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Topic,Entry
 from .forms import EntryForm
-from django.urls import reverse
+from django.urls import reverse_lazy
 
 def index(request):
     return render(request, 'index.html')
@@ -42,18 +42,40 @@ class UpdateTopicView(UpdateView):
 
 class DeleteTopicView(DeleteView):
     model = Topic
-    template_name = 'delete_view.html'
+    template_name = 'delete_view.html'  
+    success_url = '/topics'
+    
+   
 
-def new_entry(request, topic_id):
-    topic = Topic.objects.get(id=topic_id)
-    if request.method != 'POST':
-        form = EntryForm()
-    else:
-        form = EntryForm(data=request.POST)
-        if form.is_valid():
-            new_entry = form.save(commit=False)
-            new_entry.topic = topic
-            new_entry.save()
-            return HttpResponseRedirect(reverse('topic', args=[topic_id]))
-    context = {'form':form, 'topic':topic}
-    return render(request, 'new_entry.html',context)
+class EntryCreateView(CreateView):
+    model = Entry
+    form_class = EntryForm
+    template_name = 'create_new_entry.html'
+    success_url = reverse_lazy('topics_list')  # Ou ajuste para a URL desejada
+
+    def form_valid(self, form):
+        topic_id = self.kwargs['pk']
+        topic = Topic.objects.get(id=topic_id)
+        form.instance.topic = topic
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        topic_id = self.kwargs['pk']
+        topic = Topic.objects.get(id=topic_id)
+        context["topic"] = topic
+        return context
+    
+class UpdateEntryView(UpdateView):
+    model = Entry
+    fields = ['text']
+    template_name = 'update_entry.html'
+    success_url = reverse_lazy('topics_list')
+
+    def get_success_url(self):
+        topic_id = self.object.topic.id
+        if topic_id:
+            return reverse_lazy('topic_detail', kwargs={'pk': topic_id})
+        else:
+            # Lógica de fallback, caso o topic_id não esteja na sessão
+            pass

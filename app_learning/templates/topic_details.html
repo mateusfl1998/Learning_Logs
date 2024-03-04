@@ -4,13 +4,16 @@
 
 <h2>Título: {{ topic }}</h2>
     <p>Para <b>EDITAR</b> o Tópico "{{topic}}" <a href="{% url 'topic_view_update' topic.pk%}">clique aqui !</a></p>
-    <p>Para </b>DELETAR<b> o Tópico "{{topic}}" <a href="{% url 'topic_view_delete' topic.pk%}">clique aqui !</a></p>
+    <p>Para </b>DELETAR<b> o Tópico "{{topic}}" <a href="{% url 'topic_view_delete' topic.pk %}">clique aqui !</a></p>
+    <p>Para </b>Adicionar<b> mais itens ao Tópico "{{topic}}" <a href="{% url 'entry_view_create' topic.pk%}">clique aqui !</a></p>
 
 <p>Entradas: </p>
 <ul> 
-    {%for i in entries%}
-    <p>{{i.text}} - adicionado em: {{i.date_add}} </p>
-
+    <div>
+        {%for entry in entries%} 
+        <p>{{entry.text}} - adicionado em: {{entry.date_add}} - <a href="{% url 'entry_view_update' entry.pk %}">Editar</a> - Excluir</p>
+    
+    </div>
     
     {%endfor%}
 </ul>

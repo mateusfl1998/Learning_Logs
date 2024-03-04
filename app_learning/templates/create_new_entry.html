@@ -2,6 +2,11 @@
 
 {% block content %}
 
-
+<form method="post">
+    {% csrf_token %}
+    
+    <p>Insira uma nova entrada ao tópico "{{topic}}": </p> {{form.text}}
+    
+    <button type="submit">Enviar</button>
 
 {% endblock %}
