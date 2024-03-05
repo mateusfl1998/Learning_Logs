@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 def login_view(request):
     if request.method == "POST":
@@ -16,7 +17,8 @@ def login_view(request):
     else:
         login_form = AuthenticationForm()  
         return render(request, 'login.html',{'login_form':login_form})
-    
+
+
 def registry_view(request):
     if request.method != "POST":
         user_form = UserCreationForm()
